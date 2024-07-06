@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Spinner } from 'react-bootstrap';
+
 export default function Example() {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
@@ -8,7 +10,7 @@ export default function Example() {
 
   const handleSearch = () => {
     if (!query) {
-      setError(new Error('Bitte geben sie etwas ein'));
+      setError(new Error('Bitte geben Sie etwas ein'));
       return;
     }
 
@@ -21,7 +23,6 @@ export default function Example() {
       headers: {
         Accept: "application/json",
         Authorization: 'Bearer TjZY7IPgnMZlJFFg0N0ILGmHORM9'
-
       }
     })
       .then(r => {
@@ -34,6 +35,8 @@ export default function Example() {
         data => {
           setIsLoading(false);
           setResult(data);
+          console.log("Does it work?")
+          console.log(data.response.bands[0].address);
         },
         e => {
           setIsLoading(false);
@@ -46,10 +49,8 @@ export default function Example() {
     <div>
       <SearchBar query={query} setQuery={setQuery} handleSearch={handleSearch} />
       <div className="mt-3">
-        {isLoading && <p>Loading data...</p>}
-        {error && <p>An error occurred: {error.message}</p>
-
-        }
+        {isLoading && <Spinner animation="border" variant="primary" />}
+        {error && <p>Ein Fehler ist aufgetreten: {error.message}</p>}
         {result && (
           <div>
             <pre>{JSON.stringify(result, null, 2)}</pre>
