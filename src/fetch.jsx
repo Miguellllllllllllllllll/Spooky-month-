@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Spinner, Card, Button } from 'react-bootstrap';
 import DefaultImage from '../public/Problem_1.png';
 
-export default function Example() {
+export default function Fetch() {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
