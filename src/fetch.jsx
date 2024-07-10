@@ -8,6 +8,7 @@ export default function Fetch() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [expandedBandIndex, setExpandedBandIndex] = useState(null);
 
   const handleSearch = () => {
     if (!query) {
@@ -41,7 +42,14 @@ export default function Fetch() {
             image: band.image === 'https://mx3.ch/assets/missing/missing_user_square_small-9fdb823bab509b63e87a00ddc93f2a5f20b6999a779fcb6ecd262c026dbd98d6.jpg' ? DefaultImage : band.image,
             address: band.address,
             language: band.language,
-            email: band.email
+            email: band.email,
+            biographies: band.biographies,
+            city: band.city,
+            country: band.country,
+            profile_views_count: band.profile_views_count,
+            playlists_count: band.playlists_count,
+            links: band.links,
+            performances: band.performances
           }));
           setResult(bands);
         },
@@ -50,6 +58,10 @@ export default function Fetch() {
           setError(e);
         }
       );
+  };
+
+  const toggleExpand = (index) => {
+    setExpandedBandIndex(expandedBandIndex === index ? null : index);
   };
 
   return (
@@ -71,9 +83,22 @@ export default function Fetch() {
                       <strong>Sprache:</strong> {band.language || 'Keine Sprache verfügbar'} <br />
                       <strong>Email:</strong> {band.email || 'Keine E-Mail verfügbar'}
                     </Card.Text>
-                    <Button variant="primary" onClick={handleSearch}>
-          more
-        </Button>
+                    <Button variant="primary" onClick={() => toggleExpand(index)}>
+                      More
+                    </Button>
+                    {expandedBandIndex === index && (
+                      <div className="mt-3">
+                        <Card.Text>
+                          <strong>Biographien:</strong> {band.biographies.length > 0 ? band.biographies.join(', ') : 'Keine Biographien verfügbar'} <br />
+                          <strong>Stadt:</strong> {band.city || 'Keine Stadt verfügbar'} <br />
+                          <strong>Land:</strong> {band.country || 'Kein Land verfügbar'} <br />
+                          <strong>Profilansichten:</strong> {band.profile_views_count} <br />
+                          <strong>Playlist-Anzahl:</strong> {band.playlists_count} <br />
+                          <strong>Links:</strong> {band.links.length > 0 ? band.links.map((link, i) => <div key={i}><a href={link.url} target="_blank" rel="noopener noreferrer">{link.title || link.url}</a></div>) : 'Keine Links verfügbar'} <br />
+                          <strong>Auftritte:</strong> {band.performances.length > 0 ? band.performances.map((performance, i) => <div key={i}>{performance.name}</div>) : 'Keine Auftritte verfügbar'}
+                        </Card.Text>
+                      </div>
+                    )}
                   </Card.Body>
                 </Card>
               </div>
