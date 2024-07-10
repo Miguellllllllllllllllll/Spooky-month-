@@ -27,16 +27,22 @@ export default function Example() {
     })
       .then(r => {
         if (!r.ok) {
-          throw new Error(`HTTP error! status: ${r.status}`);
+          throw new Error(`HTTP error! code: ${r.status}`);
         }
         return r.json();
       })
       .then(
         data => {
           setIsLoading(false);
-          setResult(data);
-          console.log("Does it work?")
-          console.log(data.response.bands[0].address);
+          // holt dir das, was du willst.
+          const bands = data.response.bands.map(band => ({
+            name: band.name,
+            image: band.image,
+            address: band.address,
+            language: band.language,
+            email: band.email
+          }));
+          setResult(bands);
         },
         e => {
           setIsLoading(false);
@@ -53,7 +59,17 @@ export default function Example() {
         {error && <p>Ein Fehler ist aufgetreten: {error.message}</p>}
         {result && (
           <div>
-            <pre>{JSON.stringify(result, null, 2)}</pre>
+            <ul>
+              {result.map((band, index) => (
+                <li key={index}>
+                  <strong>Name:</strong> {band.name} <br />
+                  {band.image && <img src={band.image} alt={`${band.name}`} style={{width: '100px', height: '100px'}} />} <br />
+                  <strong>Address:</strong> {band.address || 'Keine Adresse verfügbar'} <br />
+                  <strong>Language:</strong> {band.language || 'Keine Sprache verfügbar'} <br />
+                  <strong>Email:</strong> {band.email || 'Keine E-Mail verfügbar'}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
