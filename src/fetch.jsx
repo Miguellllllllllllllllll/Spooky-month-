@@ -5,12 +5,25 @@ import { Spinner, Row, Col, Card, Button } from 'react-bootstrap';
 import DefaultImage from '../public/Problem_1.png';
 import SearchBar from './searchbar';
 
+// Funktion, um ein zufälliges Hintergrundbild auszuwählen
+function getRandomBackground() {
+  const backgrounds = ['background.jpg', 'backgroundy.jpg', 'backgroundw.png'];
+  const randomIndex = Math.floor(Math.random() * backgrounds.length);
+  return backgrounds[randomIndex];
+}
+
 const backgroundStyle = {
-  backgroundImage: 'url("background.jpg")',
-  backgroundSize: 'cover',
+  backgroundImage: `url(${getRandomBackground()})`,
+  backgroundSize: 'percentage', 
   minHeight: '100vh',
   padding: '20px'
 };
+
+const App = () => (
+  <div style={backgroundStyle}>
+    {/* Dein übriger Inhalt */}
+  </div>
+);
 
 const cardStyle = {
   backgroundColor: 'rgba(255, 255, 255, 0.8)',

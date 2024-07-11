@@ -10,7 +10,7 @@ const SearchBar = ({ query, setQuery, handleSearch }) => {
             <input
               type="text"
               className="form-control"
-              placeholder="Suche..."
+              placeholder="Search for a band!"
               aria-label="Search"
               value={query}
               onChange={e => setQuery(e.target.value)}
