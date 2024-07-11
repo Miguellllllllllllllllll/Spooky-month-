@@ -1,13 +1,12 @@
-// Fetch.jsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Spinner, Row, Col, Card, Button } from 'react-bootstrap';
 import DefaultImage from '../public/Problem_1.png';
 import SearchBar from './searchbar';
 
-// Funktion, um ein zufälliges Hintergrundbild auszuwählen
+
 function getRandomBackground() {
-  const backgrounds = ['background.jpg', 'backgroundy.jpg', 'backgroundw.png'];
+  const backgrounds = ['background.jpg', 'backgroundy.jpg', 'backgroundw.png', 'backgroundr.jpg'];
   const randomIndex = Math.floor(Math.random() * backgrounds.length);
   return backgrounds[randomIndex];
 }
@@ -21,7 +20,7 @@ const backgroundStyle = {
 
 const App = () => (
   <div style={backgroundStyle}>
-    {/* Dein übriger Inhalt */}
+    {}
   </div>
 );
 
@@ -105,7 +104,7 @@ export default function Fetch() {
       <div className="container mt-5">
         <SearchBar query={query} setQuery={setQuery} handleSearch={handleSearch} />
         <div className="mt-3">
-          {isLoading && <Spinner animation="border" variant="primary" />}
+          {isLoading && <Spinner animation="border" variant="primary" className='col-md-6 col-md-offset-3' />}
           {result && result.length === 0 && (
             <Card style={cardStyle}>
               <Card.Body>
